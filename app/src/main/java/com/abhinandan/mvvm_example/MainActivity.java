@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-
 import java.util.List;
+
+
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerViewAdapter adapter;
@@ -25,19 +26,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mainActivityViewModel.getPlaces().observe(this, new Observer<List<Places>>() {
+        mainActivityViewModel.getPlaces(MainActivity.this).observe(this, new Observer<List<Places>>() {
             @Override
             public void onChanged(List<Places> places) {
                adapter.notifyDataSetChanged();
             }
         });
 
-
         init();
     }
 
     private void init(){
-        adapter = new RecyclerViewAdapter(mainActivityViewModel.getPlaces().getValue(), this);
+        adapter = new RecyclerViewAdapter(mainActivityViewModel.getPlaces(MainActivity.this).getValue(), this);
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
